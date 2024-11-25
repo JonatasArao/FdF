@@ -1,6 +1,6 @@
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lXext -lX11 -lm -lz -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx_Linux
 
 LIB_DIR = lib
