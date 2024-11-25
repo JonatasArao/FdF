@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/25 08:58:59 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:25:10 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,24 @@
 # include <math.h>
 # include "libft.h"
 # include "mlx.h"
-# define WINDOW_WIDTH 500
-# define WINDOW_HEIGHT 500
+# ifndef WINDOW_WIDTH
+#  define WINDOW_WIDTH 500
+# endif
+# ifndef WINDOW_HEIGHT
+#  define WINDOW_HEIGHT 500
+# endif
+# ifndef KEYPRESS
+#  define KEYPRESS 2
+# endif
+# ifndef KEYPRESS_MASK
+#  define KEYPRESS_MASK 1L << 0
+# endif
+# ifndef CLOSE_BUTTON
+#  define CLOSE_BUTTON 17
+# endif
+# ifndef ESC_KEY
+#  define ESC_KEY 65307
+# endif
 
 typedef struct s_img
 {
@@ -27,11 +43,25 @@ typedef struct s_img
 	int		endian;
 }	t_img;
 
+typedef struct s_point
+{
+	unsigned int	color;
+	int				x;
+	int				y;
+	int				z;
+}	t_point;
+
 typedef struct s_fdf
 {
 	void	*mlx;
 	void	*win;
 	t_img	img;
 }	t_fdf;
+
+void	img_pix_put(t_img *img, t_point point);
+
+void	render_background(t_img *img, int color);
+
+int		render(t_fdf *fdf);
 
 #endif

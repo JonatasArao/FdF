@@ -14,7 +14,7 @@ HEADER = $(HEADER_DIR)/fdf.h
 INCLUDES = -I$(HEADER_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
 SRCS_DIR = src
-SRCS_FILES = main.c
+SRCS_FILES = drawing.c main.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
 OBJS_DIR = objs
