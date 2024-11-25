@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:01:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/25 10:24:53 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/25 10:35:26 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 void	img_pix_put(t_img *img, t_point point)
 {
 	char	*pixel;
+	int		i;
 
-	if (point.x >= 0 && point.x < WINDOW_WIDTH
-		&& point.y >= 0 && point.y < WINDOW_HEIGHT)
+	i = img->bits_per_pixel - 8;
+	pixel = img->addr + (point.y * img->line_len
+			+ point.x * (img->bits_per_pixel / 8));
+	while (i >= 0)
 	{
-		pixel = img->addr + (point.y * img->line_len
-				+ point.x * (img->bits_per_pixel / 8));
-		*(int *)pixel = point.color;
+		if (img->endian != 0)
+			*pixel++ = (point.color >> i) & 0xFF;
+		else
+			*pixel++ = (point.color >> (img->bits_per_pixel - 8 - i)) & 0xFF;
+		i -= 8;
 	}
 }
 
