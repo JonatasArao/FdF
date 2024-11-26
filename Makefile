@@ -14,7 +14,7 @@ HEADER = $(HEADER_DIR)/fdf.h
 INCLUDES = -I$(HEADER_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
 SRCS_DIR = src
-SRCS_FILES = drawing.c main.c
+SRCS_FILES = parsing.c drawing.c main.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
 OBJS_DIR = objs
@@ -39,10 +39,11 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER) | $(OBJS_DIR)
 
 clean:
 	rm -rf $(OBJS) $(OBJS_DIR)
-	@make -C $(MLX_DIR) clean
-	@make -C $(LIBFT_DIR) clean
+	@make clean -C $(MLX_DIR)
+	@make clean -C $(LIBFT_DIR)
 
 fclean: clean
 	rm -rf $(NAME)
+	@make fclean -C $(LIBFT_DIR)
 
 re: fclean all

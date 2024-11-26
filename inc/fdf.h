@@ -6,13 +6,15 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/25 10:25:10 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:14:40 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 # include <math.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include "libft.h"
 # include "mlx.h"
 # ifndef WINDOW_WIDTH
@@ -25,7 +27,7 @@
 #  define KEYPRESS 2
 # endif
 # ifndef KEYPRESS_MASK
-#  define KEYPRESS_MASK 1L << 0
+#  define KEYPRESS_MASK 1L
 # endif
 # ifndef CLOSE_BUTTON
 #  define CLOSE_BUTTON 17
@@ -56,9 +58,14 @@ typedef struct s_fdf
 	void	*mlx;
 	void	*win;
 	t_img	img;
+	t_list	*points;
 }	t_fdf;
 
 void	img_pix_put(t_img *img, t_point point);
+
+int		parse_cell_data(char *cell, t_point *point);
+
+t_list	*parse_mapfile(char *filename);
 
 void	render_background(t_img *img, int color);
 

@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:34:38 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/25 10:12:51 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 15:12:35 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,16 @@ static int	init_window(t_fdf *fdf)
 	return (1);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
 
+	if (argc != 2)
+	{
+		ft_putendl_fd("Usage : ./fdf_linux <filename>", 2);
+		return (1);
+	}
+	fdf.points = parse_mapfile(argv[1]);
 	if (!init_window(&fdf))
 		return (1);
 	fdf.img.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
