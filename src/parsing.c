@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/26 17:37:30 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/26 18:11:56 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ int	parse_cell_data(char *cell, t_point *point)
 		while (cell[color_i])
 		{
 			cell[color_i] = ft_toupper(cell[color_i]);
-			if (!ft_isxdigit(cell[color_i]))
-				return (0);
 			color_i++;
 		}
+		if (!ft_isxdigit(cell[color_i - 1]))
+			return (0);
 		point->color = ft_atoi_base(&cell[num_i + 3], "0123456789ABCDEF");
 	}
-	else if (cell[num_i] == ',')
+	else if (cell[num_i] != '\0')
 		return (0);
 	if (cell[num_i] == '\0' || cell[num_i] == ',')
 		point->z = ft_atoi(cell);
