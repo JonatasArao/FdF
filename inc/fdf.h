@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/26 15:14:40 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:53:15 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct s_fdf
 void	img_pix_put(t_img *img, t_point point);
 
 int		parse_cell_data(char *cell, t_point *point);
+
+t_list	*add_point(t_list **head, int x, int y, char *cell);
 
 t_list	*parse_mapfile(char *filename);
 

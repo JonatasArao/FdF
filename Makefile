@@ -22,6 +22,17 @@ OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
 all: $(NAME)
 
+clean:
+	rm -rf $(OBJS) $(OBJS_DIR)
+	@make clean -C $(MLX_DIR)
+	@make clean -C $(LIBFT_DIR)
+
+fclean: clean
+	rm -rf $(NAME)
+	@make fclean -C $(LIBFT_DIR)
+
+re: fclean all
+
 $(NAME): $(LIBFT_LIB) $(MLX_LIB) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
@@ -36,14 +47,3 @@ $(OBJS_DIR):
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(HEADER) | $(OBJS_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-clean:
-	rm -rf $(OBJS) $(OBJS_DIR)
-	@make clean -C $(MLX_DIR)
-	@make clean -C $(LIBFT_DIR)
-
-fclean: clean
-	rm -rf $(NAME)
-	@make fclean -C $(LIBFT_DIR)
-
-re: fclean all
