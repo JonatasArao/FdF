@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/27 11:53:15 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 08:35:10 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # endif
 # ifndef WINDOW_HEIGHT
 #  define WINDOW_HEIGHT 500
+# endif
+# ifndef DEFAULT_COLOR
+#  define DEFAULT_COLOR 0xFFFFFF
 # endif
 # ifndef KEYPRESS
 #  define KEYPRESS 2

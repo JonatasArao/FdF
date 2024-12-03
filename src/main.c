@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:34:38 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/11/26 15:12:35 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:06:20 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	close_window(t_fdf *fdf)
 	mlx_destroy_window(fdf->mlx, fdf->win);
 	mlx_destroy_image(fdf->mlx, fdf->img.img);
 	mlx_destroy_display(fdf->mlx);
+	ft_lstclear(&fdf->points, free);
 	free(fdf->mlx);
 	exit(0);
 	return (0);
@@ -54,7 +55,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	fdf.points = parse_mapfile(argv[1]);
-	if (!init_window(&fdf))
+	if (!fdf.points || !init_window(&fdf))
 		return (1);
 	fdf.img.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	fdf.img.addr = mlx_get_data_addr(fdf.img.img, &fdf.img.bits_per_pixel,
