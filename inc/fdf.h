@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/03 11:59:46 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 16:04:52 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ int		parse_cell(char *cell, t_point *point);
 
 t_list	*add_point(t_list **head, int x, int y, char *cell);
 
-t_list	*parse_mapfile(char *filename);
+int		parse_line(int x, char *line_char, t_list **points);
+
+void	parse_mapfile(int fd, t_list **points);
+
+t_list	*extract_points(char *filename);
 
 void	render_background(t_img *img, int color);
 

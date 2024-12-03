@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/03 11:59:38 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/03 18:03:10 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ int	parse_cell(char *cell, t_point *point)
 	if (!cell || !point)
 		return (0);
 	token = ft_strtok_r(cell, ",", &saveptr);
-	if (!ft_strall(token, ft_isdigit) && !((*token == '+' || *token == '-')
-			&& ft_strall(token + 1, ft_isdigit)))
+	if (!token || (!ft_strall(token, ft_isdigit)
+			&& !((*token == '+' || *token == '-')
+				&& ft_strall(token + 1, ft_isdigit) && *(token + 1))))
 		return (0);
 	point->z = ft_atoi(token);
 	token = ft_strtok_r(NULL, ",", &saveptr);
@@ -30,6 +31,8 @@ int	parse_cell(char *cell, t_point *point)
 	{
 		ft_strforeach(token + 2, ft_toupper);
 		point->color = ft_atoi_base(token + 2, "0123456789ABCDEF");
+		if (point->color > 0xFFFFFF)
+			point->color = DEFAULT_COLOR;
 	}
 	else
 		point->color = DEFAULT_COLOR;
@@ -55,7 +58,56 @@ t_list	*add_point(t_list **head, int x, int y, char *cell)
 	return (*head);
 }
 
-t_list	*parse_mapfile(char *filename)
+int	parse_line(int x, char *line_char, t_list **points)
+{
+	char		*cell;
+	int			y;
+
+	y = 0;
+	cell = ft_strtok(line_char, " \n");
+	while (cell != NULL)
+	{
+		if (!add_point(points, x, y, cell))
+		{
+			ft_lstclear(points, free);
+			return (-1);
+		}
+		cell = ft_strtok(NULL, " \n");
+		y++;
+	}
+	return (y);
+}
+
+void	parse_mapfile(int fd, t_list **points)
+{
+	char	*line_char;
+	int		x;
+	int		len;
+	int		expected_len;
+
+	x = 0;
+	line_char = get_next_line(fd);
+	while (line_char)
+	{
+		if (x == 0 || (len != -1 && len == expected_len))
+		{
+			len = parse_line(x, line_char, points);
+			if (x == 0)
+				expected_len = len;
+			x++;
+		}
+		else if (*points)
+		{
+			ft_lstclear(points, free);
+			ft_putendl_fd("Found wrong line length.", 2);
+		}
+		free(line_char);
+		line_char = get_next_line(fd);
+	}
+	free(line_char);
+}
+
+t_list	*extract_points(char *filename)
 {
 	t_list	*points;
 	int		fd;
@@ -63,13 +115,19 @@ t_list	*parse_mapfile(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Cannot open file");
+		perror("Cannot open file.");
 		return (NULL);
 	}
 	points = NULL;
+	parse_mapfile(fd, &points);
+	if (!points)
+	{
+		ft_putendl_fd("Invalid mapfile.", 2);
+		return (NULL);
+	}
 	if (close(fd) == -1)
 	{
-		perror("Error closing file");
+		perror("Error closing file.");
 		return (NULL);
 	}
 	return (points);
