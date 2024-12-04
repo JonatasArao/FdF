@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/04 08:08:26 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/04 09:58:44 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,13 @@ t_list	*add_point(t_list **head, int x, int y, char *cell)
 	return (*head);
 }
 
-int	parse_line(int x, char *line_char, t_list **points)
+int	parse_line(int y, char *line_char, t_list **points)
 {
 	char	*saveptr;
 	char	*cell;
-	int		y;
+	int		x;
 
-	y = 0;
+	x = 0;
 	cell = ft_strtok_r(line_char, " \n", &saveptr);
 	while (cell != NULL)
 	{
@@ -80,28 +80,28 @@ int	parse_line(int x, char *line_char, t_list **points)
 			return (-1);
 		}
 		cell = ft_strtok_r(NULL, " \n", &saveptr);
-		y++;
+		x++;
 	}
-	return (y);
+	return (x);
 }
 
 void	parse_mapfile(int fd, t_list **points)
 {
 	char	*line_char;
-	int		x;
+	int		y;
 	int		len;
 	int		expected_len;
 
-	x = 0;
+	y = 0;
 	line_char = get_next_line(fd);
 	while (line_char)
 	{
-		if (x == 0 || (len != -1 && len == expected_len))
+		if (y == 0 || (len != -1 && len == expected_len))
 		{
-			len = parse_line(x, line_char, points);
-			if (x == 0)
+			len = parse_line(y, line_char, points);
+			if (y == 0)
 				expected_len = len;
-			x++;
+			y++;
 		}
 		else if (*points)
 		{

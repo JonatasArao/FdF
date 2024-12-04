@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:01:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/04 08:25:11 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/04 09:47:14 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,24 @@ void	img_pix_put(t_img *img, t_point point)
 			*pixel++ = (point.color >> i) & 0xFF;
 		else
 			*pixel++ = (point.color >> (img->bits_per_pixel - 8 - i)) & 0xFF;
+	}
+}
+
+void	render_background(t_img *img, int color)
+{
+	t_point	point;
+
+	point.color = color;
+	point.y = 0;
+	while (point.y < WINDOW_HEIGHT)
+	{
+		point.x = 0;
+		while (point.x < WINDOW_WIDTH)
+		{
+			img_pix_put(img, point);
+			point.x++;
+		}
+		point.y++;
 	}
 }
 
