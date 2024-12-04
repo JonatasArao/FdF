@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/03 18:03:10 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/04 08:08:26 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,28 @@ t_list	*add_point(t_list **head, int x, int y, char *cell)
 	new_point->x = x;
 	new_point->y = y;
 	if (!parse_cell(cell, new_point))
+	{
+		ft_putendl_fd("Invalid value.", 2);
 		return (ft_delpointer((void *) &new_point));
+	}
 	new_node = ft_lstnew(new_point);
 	if (new_node == NULL)
+	{
+		ft_putendl_fd("New point allocation failed.", 2);
 		return (ft_delpointer((void *) &new_point));
+	}
 	ft_lstadd_front(head, new_node);
 	return (*head);
 }
 
 int	parse_line(int x, char *line_char, t_list **points)
 {
-	char		*cell;
-	int			y;
+	char	*saveptr;
+	char	*cell;
+	int		y;
 
 	y = 0;
-	cell = ft_strtok(line_char, " \n");
+	cell = ft_strtok_r(line_char, " \n", &saveptr);
 	while (cell != NULL)
 	{
 		if (!add_point(points, x, y, cell))
@@ -72,7 +79,7 @@ int	parse_line(int x, char *line_char, t_list **points)
 			ft_lstclear(points, free);
 			return (-1);
 		}
-		cell = ft_strtok(NULL, " \n");
+		cell = ft_strtok_r(NULL, " \n", &saveptr);
 		y++;
 	}
 	return (y);
@@ -99,12 +106,12 @@ void	parse_mapfile(int fd, t_list **points)
 		else if (*points)
 		{
 			ft_lstclear(points, free);
-			ft_putendl_fd("Found wrong line length.", 2);
+			if (len != expected_len)
+				ft_putendl_fd("Found wrong line length.", 2);
 		}
 		free(line_char);
 		line_char = get_next_line(fd);
 	}
-	free(line_char);
 }
 
 t_list	*extract_points(char *filename)
@@ -115,19 +122,17 @@ t_list	*extract_points(char *filename)
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Cannot open file.");
+		perror("Cannot open file");
 		return (NULL);
 	}
 	points = NULL;
 	parse_mapfile(fd, &points);
 	if (!points)
-	{
 		ft_putendl_fd("Invalid mapfile.", 2);
-		return (NULL);
-	}
 	if (close(fd) == -1)
 	{
-		perror("Error closing file.");
+		perror("Error closing file");
+		ft_lstclear(&points, free);
 		return (NULL);
 	}
 	return (points);
