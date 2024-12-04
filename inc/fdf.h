@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/04 09:56:59 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:13:34 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ typedef struct s_point
 	int				z;
 }	t_point;
 
+typedef struct s_vector
+{
+	t_point	*a;
+	t_point	*b;
+	int		delta_x;
+	int		delta_y;
+	int		direction_x;
+	int		direction_y;
+}	t_vector;
+
 typedef struct s_fdf
 {
 	void	*mlx;
@@ -75,6 +85,8 @@ int		parse_line(int y, char *line_char, t_list **points);
 void	parse_mapfile(int fd, t_list **points);
 
 t_list	*extract_points(char *filename);
+
+t_list	*add_vector(t_list **head, t_point *a, t_point *b);
 
 void	render_background(t_img *img, int color);
 
