@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/05 17:28:38 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/06 18:42:14 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,13 @@
 # ifndef DEFAULT_COLOR
 #  define DEFAULT_COLOR 0xFFFFFF
 # endif
-# ifndef KEYPRESS
-#  define KEYPRESS 2
+# ifndef ISO_ANGLE
+#  define ISO_ANGLE 30
 # endif
-# ifndef KEYPRESS_MASK
-#  define KEYPRESS_MASK 1L
-# endif
-# ifndef CLOSE_BUTTON
-#  define CLOSE_BUTTON 17
-# endif
-# ifndef ESC_KEY
-#  define ESC_KEY 65307
-# endif
+# define KEYPRESS 2
+# define KEYPRESS_MASK 1L
+# define CLOSE_BUTTON 17
+# define ESC_KEY 65307
 
 typedef struct s_img
 {
@@ -54,28 +49,31 @@ typedef struct s_point
 	int				x;
 	int				y;
 	int				z;
+	int				x_2d;
+	int				y_2d;
 }	t_point;
 
 typedef struct s_vector
 {
 	t_point	*a;
 	t_point	*b;
-	int		delta_x;
-	int		delta_y;
-	int		direction_x;
-	int		direction_y;
 }	t_vector;
+
+typedef struct s_map
+{
+	t_list	*points;
+	t_list	*vectors;
+}	t_map;
 
 typedef struct s_fdf
 {
 	void	*mlx;
 	void	*win;
-	t_img	img;
-	t_list	*points;
-	t_list	*vectors;
+	t_img	canva;
+	t_map	map;
 }	t_fdf;
 
-void	img_pix_put(t_img *img, t_point point);
+void	img_pix_put(t_img *img, int x, int y, int color);
 
 int		parse_cell(char *cell, t_point *point);
 
@@ -85,13 +83,15 @@ int		parse_line(int y, char *line_char, t_list **points);
 
 void	parse_mapfile(int fd, t_list **points);
 
-void	set_vector_properties(void *vector_ptr);
-
 t_list	*extract_points(char *filename);
 
 t_list	*add_vector(t_list **head, t_point *a, t_point *b);
 
 t_list	*generate_vector_list(t_list *points);
+
+void	isometric_projection(t_list *points);
+
+void	bresenham_line_alg(t_img *img, t_point a, t_point b);
 
 void	render_background(t_img *img, int color);
 

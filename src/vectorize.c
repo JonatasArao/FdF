@@ -6,32 +6,11 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:24:40 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/05 17:28:10 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:41:29 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	set_vector_properties(void *vector_ptr)
-{
-	t_vector	*vector;
-
-	if (vector_ptr)
-	{
-		vector = (t_vector *)vector_ptr;
-		if (vector-> a && vector->b)
-		{
-			vector->delta_x = vector->b->x - vector->a->x;
-			vector->delta_y = vector->b->y - vector->a->y;
-			vector->direction_x = 1;
-			if (vector->delta_x < 0)
-				vector->direction_x = -1;
-			vector->direction_y = 1;
-			if (vector->delta_y < 0)
-				vector->direction_y = -1;
-		}
-	}
-}
 
 t_list	*add_vector(t_list **head, t_point *a, t_point *b)
 {
@@ -43,7 +22,6 @@ t_list	*add_vector(t_list **head, t_point *a, t_point *b)
 		return (NULL);
 	new_vector->a = a;
 	new_vector->b = b;
-	set_vector_properties(new_vector);
 	new_node = ft_lstnew(new_vector);
 	if (new_node == NULL)
 	{

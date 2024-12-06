@@ -6,61 +6,49 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 10:01:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/04 14:02:18 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/06 17:49:35 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	img_pix_put(t_img *img, t_point point)
+void	img_pix_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 	int		i;
 
-	if (point.x >= 0 && point.x < WINDOW_WIDTH
-		&& point.y >= 0 && point.y < WINDOW_HEIGHT)
+	if (x >= 0 && x < WINDOW_WIDTH
+		&& y >= 0 && y < WINDOW_HEIGHT)
 	{
 		i = img->bits_per_pixel;
-		pixel = img->addr + (point.y * img->line_len
-				+ point.x * (img->bits_per_pixel / 8));
-		if (*(unsigned int *)pixel == 0)
+		pixel = img->addr + (y * img->line_len
+				+ x * (img->bits_per_pixel / 8));
+		while (i > 0)
 		{
-			while (i > 0)
-			{
-				i -= 8;
-				if (img->endian != 0)
-					*pixel++ = (point.color >> i) & 0xFF;
-				else
-					*pixel++ = (point.color >> (img->bits_per_pixel - 8 - i))
-						& 0xFF;
-			}
+			i -= 8;
+			if (img->endian != 0)
+				*pixel++ = (color >> i) & 0xFF;
+			else
+				*pixel++ = (color >> (img->bits_per_pixel - 8 - i))
+					& 0xFF;
 		}
-	}
-}
-
-void	render_background(t_img *img, int color)
-{
-	t_point	point;
-
-	point.color = color;
-	point.y = 0;
-	while (point.y < WINDOW_HEIGHT)
-	{
-		point.x = 0;
-		while (point.x < WINDOW_WIDTH)
-		{
-			img_pix_put(img, point);
-			point.x++;
-		}
-		point.y++;
 	}
 }
 
 int	render(t_fdf *fdf)
 {
+	t_list		*vectors;
+	t_vector	*current;
+
 	if (fdf->win == NULL)
 		return (1);
-	render_background(&fdf->img, 0xFFFFFF);
-	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->img.img, 0, 0);
+	vectors = fdf->map.vectors;
+	while (vectors)
+	{
+		current = (t_vector *) vectors->content;
+		bresenham_line_alg(&fdf->canva, *(current->a), *(current->b));
+		vectors = vectors->next;
+	}
+	mlx_put_image_to_window(fdf->mlx, fdf->win, fdf->canva.img, 0, 0);
 	return (0);
 }
