@@ -1,7 +1,7 @@
 NAME = fdf
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lXext -lX11 -lm -lz -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx_Linux
+LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz
 
 LIB_DIR = lib
 MLX_DIR = $(LIB_DIR)/minilibx-linux
@@ -14,7 +14,7 @@ HEADER = $(HEADER_DIR)/fdf.h
 INCLUDES = -I$(HEADER_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
 SRCS_DIR = src
-SRCS_FILES = parse.c vectorize.c transform.c draw.c render.c main.c
+SRCS_FILES = parse.c vectorize.c map.c transform.c draw.c render.c main.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
 OBJS_DIR = objs

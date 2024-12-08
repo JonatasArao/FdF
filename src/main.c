@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:34:38 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/06 18:31:25 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/08 01:35:31 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,8 @@ int	main(int argc, char **argv)
 		ft_putendl_fd("Usage : ./fdf_linux <filename>", 2);
 		return (1);
 	}
-	fdf.map.points = extract_points(argv[1]);
-	fdf.map.vectors = generate_vector_list(fdf.map.points);
-	if (!fdf.map.vectors)
-		ft_lstclear(&fdf.map.points, free);
-	if (!fdf.map.points || !init_window(&fdf))
+	if (!init_map(&fdf.map, argv[1]) || !init_window(&fdf))
 		return (1);
-	isometric_projection(fdf.map.points);
 	fdf.canva.img = mlx_new_image(fdf.mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	fdf.canva.addr = mlx_get_data_addr(fdf.canva.img, &fdf.canva.bits_per_pixel,
 			&fdf.canva.line_len, &fdf.canva.endian);
