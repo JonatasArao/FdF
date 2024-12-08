@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/06 18:42:14 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:25:37 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <limits.h>
 # include "libft.h"
 # include "mlx.h"
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 500
+#  define WINDOW_WIDTH 720
 # endif
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 500
+#  define WINDOW_HEIGHT 480
 # endif
 # ifndef DEFAULT_COLOR
 #  define DEFAULT_COLOR 0xFFFFFF
@@ -59,10 +60,24 @@ typedef struct s_vector
 	t_point	*b;
 }	t_vector;
 
+typedef struct s_projection
+{
+	double	scale;
+	int		translate_x;
+	int		translate_y;
+}	t_projection;
+
 typedef struct s_map
 {
-	t_list	*points;
-	t_list	*vectors;
+	t_list			*points;
+	t_list			*vectors;
+	t_projection	projection;
+	int				width;
+	int				height;
+	int				max_x;
+	int				max_y;
+	int				min_x;
+	int				min_y;
 }	t_map;
 
 typedef struct s_fdf
@@ -89,7 +104,17 @@ t_list	*add_vector(t_list **head, t_point *a, t_point *b);
 
 t_list	*generate_vector_list(t_list *points);
 
-void	isometric_projection(t_list *points);
+void	scale_point(t_point *point, double scale);
+
+void	isometric_projection(t_point *point);
+
+void	translate_point(t_point *point, int tx, int ty);
+
+void	apply_projection(t_projection proj, t_list *points);
+
+void	update_map_bounds(t_map *map, t_list *points);
+
+int		init_map(t_map *map, char *mapfile);
 
 void	bresenham_line_alg(t_img *img, t_point a, t_point b);
 

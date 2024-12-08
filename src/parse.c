@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/05 15:52:20 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/08 18:39:15 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ t_list	*add_point(t_list **head, int x, int y, char *cell)
 		return (NULL);
 	new_point->x = x;
 	new_point->y = y;
+	new_point->x_2d = x;
+	new_point->y_2d = y;
 	if (!parse_cell(cell, new_point))
 	{
 		ft_putendl_fd("Invalid value.", 2);
