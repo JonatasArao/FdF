@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/08 18:25:37 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:19:06 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 # include "libft.h"
 # include "mlx.h"
 # ifndef WINDOW_WIDTH
-#  define WINDOW_WIDTH 720
+#  define WINDOW_WIDTH 1024
 # endif
 # ifndef WINDOW_HEIGHT
-#  define WINDOW_HEIGHT 480
+#  define WINDOW_HEIGHT 768
 # endif
 # ifndef DEFAULT_COLOR
 #  define DEFAULT_COLOR 0xFFFFFF
@@ -50,8 +50,9 @@ typedef struct s_point
 	int				x;
 	int				y;
 	int				z;
-	int				x_2d;
-	int				y_2d;
+	int				p_x;
+	int				p_y;
+	int				p_z;
 }	t_point;
 
 typedef struct s_vector
@@ -60,18 +61,18 @@ typedef struct s_vector
 	t_point	*b;
 }	t_vector;
 
-typedef struct s_projection
+typedef struct s_transform
 {
 	double	scale;
 	int		translate_x;
 	int		translate_y;
-}	t_projection;
+}	t_transform;
 
 typedef struct s_map
 {
 	t_list			*points;
 	t_list			*vectors;
-	t_projection	projection;
+	t_transform		transform;
 	int				width;
 	int				height;
 	int				max_x;
@@ -110,11 +111,13 @@ void	isometric_projection(t_point *point);
 
 void	translate_point(t_point *point, int tx, int ty);
 
-void	apply_projection(t_projection proj, t_list *points);
+void	apply_transform(t_transform proj, t_list *points);
 
 void	update_map_bounds(t_map *map, t_list *points);
 
 int		init_map(t_map *map, char *mapfile);
+
+int		color_line_gradient(int a_color, int b_color, int len, int position);
 
 void	bresenham_line_alg(t_img *img, t_point a, t_point b);
 
