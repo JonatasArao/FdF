@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/06 18:07:21 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/09 17:32:12 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/11 16:39:48 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	scale_point(t_point *point, double scale)
 	{
 		point->p_x = point->x * scale;
 		point->p_y = point->y * scale;
-		point->p_z = point->p_z * scale;
+		point->p_z = point->z * scale;
 	}
 }
 

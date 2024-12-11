@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:06:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/09 17:25:45 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/11 17:50:12 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,15 @@ void	initial_position(t_map *map)
 {
 	double	scale_x;
 	double	scale_y;
+	double	max_scale;
 
-	if (map->width && map->height)
-	{
-		scale_x = (double)(WINDOW_WIDTH * 0.85) / map->width;
-		scale_y = (double)(WINDOW_HEIGHT * 0.85) / map->height;
-		map->transform.scale = fmin(scale_x, scale_y);
-		if (scale_x > WINDOW_WIDTH * 0.05 || scale_y > WINDOW_HEIGHT * 0.05)
-			map->transform.scale *= 0.5;
-	}
-	else
-	{
-		map->transform.scale = 145;
-	}
+	scale_x = (double)(WINDOW_WIDTH * 0.85) / map->width;
+	scale_y = (double)(WINDOW_HEIGHT * 0.85) / map->height;
+	max_scale = fmin(WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.1);
+	map->transform.scale = fmin(scale_x, scale_y);
+	if (scale_x > WINDOW_WIDTH * 0.05 || scale_y > WINDOW_HEIGHT * 0.05)
+		map->transform.scale *= 0.75;
+	map->transform.scale = fmin(map->transform.scale, max_scale);
 	map->transform.translate_x = (WINDOW_WIDTH - map->width
 			* map->transform.scale) / 2
 		- map->min_x * map->transform.scale;
@@ -70,7 +66,10 @@ int	init_map(t_map *map, char *mapfile)
 	map->points = extract_points(mapfile);
 	map->vectors = generate_vector_list(map->points);
 	if (!map->vectors)
+	{
+		ft_putendl_fd("Can't generate vectors", 2);
 		ft_lstclear(&map->points, free);
+	}
 	if (!map->points)
 		return (0);
 	update_map_bounds(map, map->points);
