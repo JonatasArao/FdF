@@ -3,21 +3,22 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -L$(LIBFT_DIR) -lft -L$(MLX_DIR) -lmlx_Linux -lXext -lX11 -lm -lz
 
-LIB_DIR = lib
-MLX_DIR = $(LIB_DIR)/minilibx-linux
+MLX_DIR = minilibx-linux
 MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
-LIBFT_DIR = $(LIB_DIR)/libft
+LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-HEADER_DIR = inc
+FDF_DIR = fdf_mandatory
+
+HEADER_DIR = $(FDF_DIR)/inc
 HEADER = $(HEADER_DIR)/fdf.h
 INCLUDES = -I$(HEADER_DIR) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
-SRCS_DIR = src
+SRCS_DIR = $(FDF_DIR)/src
 SRCS_FILES = parse.c vectorize.c map.c transform.c draw.c render.c main.c
 SRCS = $(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
-OBJS_DIR = objs
+OBJS_DIR = $(FDF_DIR)/objs
 OBJS = $(addprefix $(OBJS_DIR)/, $(SRCS_FILES:.c=.o))
 
 all: $(NAME)
