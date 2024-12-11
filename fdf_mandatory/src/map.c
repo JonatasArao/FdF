@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:06:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/11 17:50:12 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/11 19:38:40 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	init_map(t_map *map, char *mapfile)
 	map->vectors = generate_vector_list(map->points);
 	if (!map->vectors)
 	{
-		ft_putendl_fd("Can't generate vectors", 2);
+		ft_putendl_fd("Can't generate vectors.", 2);
 		ft_lstclear(&map->points, free);
 	}
 	if (!map->points)
