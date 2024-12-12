@@ -6,13 +6,13 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 10:24:40 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/06 17:41:29 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:46:36 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_list	*add_vector(t_list **head, t_point *a, t_point *b)
+static t_list	*add_vector(t_list **head, t_point *a, t_point *b)
 {
 	t_vector	*new_vector;
 	t_list		*new_node;

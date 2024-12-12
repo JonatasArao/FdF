@@ -6,13 +6,13 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 06:40:44 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/09 16:01:13 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:46:09 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	parse_cell(char *cell, t_point *point)
+static int	parse_cell(char *cell, t_point *point)
 {
 	char	*saveptr;
 	char	*token;
@@ -39,7 +39,7 @@ int	parse_cell(char *cell, t_point *point)
 	return (1);
 }
 
-t_list	*add_point(t_list **head, int x, int y, char *cell)
+static t_list	*add_point(t_list **head, int x, int y, char *cell)
 {
 	t_point	*new_point;
 	t_list	*new_node;
@@ -67,7 +67,7 @@ t_list	*add_point(t_list **head, int x, int y, char *cell)
 	return (*head);
 }
 
-int	parse_line(int y, char *line_char, t_list **points)
+static int	parse_line(int y, char *line_char, t_list **points)
 {
 	char	*saveptr;
 	char	*cell;
@@ -88,7 +88,7 @@ int	parse_line(int y, char *line_char, t_list **points)
 	return (x);
 }
 
-void	parse_mapfile(int fd, t_list **points)
+static void	parse_mapfile(int fd, t_list **points)
 {
 	char	*line_char;
 	int		y;

@@ -6,7 +6,7 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 07:26:15 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/09 15:19:06 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:49:08 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,7 @@ typedef struct s_fdf
 
 void	img_pix_put(t_img *img, int x, int y, int color);
 
-int		parse_cell(char *cell, t_point *point);
-
-t_list	*add_point(t_list **head, int x, int y, char *cell);
-
-int		parse_line(int y, char *line_char, t_list **points);
-
-void	parse_mapfile(int fd, t_list **points);
-
 t_list	*extract_points(char *filename);
-
-t_list	*add_vector(t_list **head, t_point *a, t_point *b);
 
 t_list	*generate_vector_list(t_list *points);
 
@@ -113,11 +103,7 @@ void	translate_point(t_point *point, int tx, int ty);
 
 void	apply_transform(t_transform proj, t_list *points);
 
-void	update_map_bounds(t_map *map, t_list *points);
-
 int		init_map(t_map *map, char *mapfile);
-
-int		color_line_gradient(int a_color, int b_color, int len, int position);
 
 void	bresenham_line_alg(t_img *img, t_point a, t_point b);
 

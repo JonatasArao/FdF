@@ -6,13 +6,13 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 23:06:47 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/11 19:38:40 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:45:36 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	update_map_bounds(t_map *map, t_list *points)
+static void	update_map_bounds(t_map *map, t_list *points)
 {
 	t_point	point;
 
@@ -40,7 +40,7 @@ void	update_map_bounds(t_map *map, t_list *points)
 	map->height = map->max_y - map->min_y;
 }
 
-void	initial_position(t_map *map)
+static void	initial_position(t_map *map)
 {
 	double	scale_x;
 	double	scale_y;

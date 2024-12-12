@@ -8,7 +8,7 @@ MLX_LIB = $(MLX_DIR)/libmlx_Linux.a
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-FDF_DIR = fdf_mandatory
+FDF_DIR = mandatory_fdf
 
 HEADER_DIR = $(FDF_DIR)/inc
 HEADER = $(HEADER_DIR)/fdf.h

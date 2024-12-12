@@ -6,13 +6,13 @@
 /*   By: jarao-de <jarao-de@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/04 11:45:07 by jarao-de          #+#    #+#             */
-/*   Updated: 2024/12/09 16:06:51 by jarao-de         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:45:10 by jarao-de         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	color_line_gradient(int a_color, int b_color, int len, int position)
+static int	color_line_gradient(int a_color, int b_color, int len, int diff)
 {
 	double	ratio_rgb[3];
 	int		a_rgb[3];
@@ -29,15 +29,15 @@ int	color_line_gradient(int a_color, int b_color, int len, int position)
 	ratio_rgb[0] = (double)(a_rgb[0] - b_rgb[0]) / (double)len;
 	ratio_rgb[1] = (double)(a_rgb[1] - b_rgb[1]) / (double)len;
 	ratio_rgb[2] = (double)(a_rgb[2] - b_rgb[2]) / (double)len;
-	gradient_rgb[0] = b_rgb[0] + position * ratio_rgb[0];
-	gradient_rgb[1] = b_rgb[1] + position * ratio_rgb[1];
-	gradient_rgb[2] = b_rgb[2] + position * ratio_rgb[2];
+	gradient_rgb[0] = b_rgb[0] + diff * ratio_rgb[0];
+	gradient_rgb[1] = b_rgb[1] + diff * ratio_rgb[1];
+	gradient_rgb[2] = b_rgb[2] + diff * ratio_rgb[2];
 	gradient_color = (gradient_rgb[0] << 16)
 		+ (gradient_rgb[1] << 8) + gradient_rgb[2];
 	return (gradient_color);
 }
 
-void	bresenham_line_alg_low_slope(t_img *img, t_point a, t_point b)
+static void	bresenham_line_alg_low_slope(t_img *img, t_point a, t_point b)
 {
 	int	delta_x;
 	int	delta_y;
@@ -66,7 +66,7 @@ void	bresenham_line_alg_low_slope(t_img *img, t_point a, t_point b)
 	}
 }
 
-void	bresenham_line_alg_high_slope(t_img *img, t_point a, t_point b)
+static void	bresenham_line_alg_high_slope(t_img *img, t_point a, t_point b)
 {
 	int	delta_x;
 	int	delta_y;
